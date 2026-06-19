@@ -10,3 +10,5 @@ router.get("/", (req, res) => {
 });
 
 module.exports = router;
+
+// This route provides a simple health check endpoint at /api/health that returns a JSON response indicating the server is running, along with a timestamp.
