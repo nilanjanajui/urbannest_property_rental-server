@@ -18,7 +18,7 @@ export const createProperty = async (req, res) => {
 // GET /api/properties  (public)
 export const getAllProperties = async (req, res) => {
     try {
-        const { search, type, sort, page = 1, limit = 9 } = req.query;
+        const { search, type, sort, page = 1, limit = 9, minPrice, maxPrice } = req.query;
 
         const filter = { status: 'approved' };
 
@@ -27,6 +27,11 @@ export const getAllProperties = async (req, res) => {
         }
         if (type) {
             filter.type = type;
+        }
+        if (minPrice || maxPrice) {
+            filter.rent = {};
+            if (minPrice) filter.rent.$gte = Number(minPrice);
+            if (maxPrice) filter.rent.$lte = Number(maxPrice);
         }
 
         let sortOption = { createdAt: -1 };
