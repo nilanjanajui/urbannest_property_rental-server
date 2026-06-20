@@ -13,7 +13,6 @@ const PORT = process.env.PORT || 5000;
 
 connectDB();
 
-app.all("/api/auth/*", authHandler);
 app.all("/api/auth/*splat", toNodeHandler(auth));
 
 app.use(helmet());
