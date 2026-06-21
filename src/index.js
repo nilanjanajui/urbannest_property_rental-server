@@ -8,6 +8,7 @@ import morgan from "morgan";
 import connectDB from "./utils/db.js";
 import healthRoute from "./routes/health.route.js";
 import propertyRouter from './routes/property.route.js';
+import reviewRouter from './routes/review.route.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -27,6 +28,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/health", healthRoute);
 app.use('/api/properties', propertyRouter);
+app.use('/api/reviews', reviewRouter);
 
 app.use((req, res) => {
     res.status(404).json({ message: "Route not found" });
