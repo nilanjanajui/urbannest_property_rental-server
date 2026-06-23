@@ -1,6 +1,5 @@
 import Property from '../models/property.model.js';
 
-// POST /api/properties
 export const createProperty = async (req, res) => {
     try {
         const property = new Property({
@@ -11,23 +10,19 @@ export const createProperty = async (req, res) => {
         await property.save();
         res.status(201).json({ message: 'Property created successfully', property });
     } catch (error) {
+        console.error('CREATE PROPERTY ERROR:', error);
         res.status(500).json({ message: 'Failed to create property', error: error.message });
     }
 };
 
-// GET /api/properties  (public)
 export const getAllProperties = async (req, res) => {
     try {
         const { search, type, sort, page = 1, limit = 9, minPrice, maxPrice } = req.query;
 
         const filter = { status: 'approved' };
 
-        if (search) {
-            filter.location = { $regex: search, $options: 'i' };
-        }
-        if (type) {
-            filter.type = type;
-        }
+        if (search) filter.location = { $regex: search, $options: 'i' };
+        if (type) filter.type = type;
         if (minPrice || maxPrice) {
             filter.rent = {};
             if (minPrice) filter.rent.$gte = Number(minPrice);
@@ -59,11 +54,11 @@ export const getAllProperties = async (req, res) => {
             },
         });
     } catch (error) {
+        console.error('GET ALL PROPERTIES ERROR:', error);
         res.status(500).json({ message: 'Failed to fetch properties', error: error.message });
     }
 };
 
-// GET /api/properties/featured  (public)
 export const getFeaturedProperties = async (req, res) => {
     try {
         const properties = await Property.find({ status: 'approved' })
@@ -72,11 +67,11 @@ export const getFeaturedProperties = async (req, res) => {
             .populate('ownerId', 'name email');
         res.json({ properties });
     } catch (error) {
+        console.error('GET FEATURED ERROR:', error);
         res.status(500).json({ message: 'Failed to fetch featured properties', error: error.message });
     }
 };
 
-// GET /api/properties/:id  (requireAuth)
 export const getPropertyById = async (req, res) => {
     try {
         const property = await Property.findById(req.params.id).populate(
@@ -88,11 +83,11 @@ export const getPropertyById = async (req, res) => {
         }
         res.json({ property });
     } catch (error) {
+        console.error('GET PROPERTY BY ID ERROR:', error);
         res.status(500).json({ message: 'Failed to fetch property', error: error.message });
     }
 };
 
-// PATCH /api/properties/:id  (requireAuth + requireRole owner)
 export const updateProperty = async (req, res) => {
     try {
         const property = await Property.findById(req.params.id);
@@ -109,11 +104,11 @@ export const updateProperty = async (req, res) => {
         );
         res.json({ message: 'Property updated successfully', property: updated });
     } catch (error) {
+        console.error('UPDATE PROPERTY ERROR:', error);
         res.status(500).json({ message: 'Failed to update property', error: error.message });
     }
 };
 
-// DELETE /api/properties/:id  (requireAuth + requireRole owner)
 export const deleteProperty = async (req, res) => {
     try {
         const property = await Property.findById(req.params.id);
@@ -126,6 +121,7 @@ export const deleteProperty = async (req, res) => {
         await Property.findByIdAndDelete(req.params.id);
         res.json({ message: 'Property deleted successfully' });
     } catch (error) {
+        console.error('DELETE PROPERTY ERROR:', error);
         res.status(500).json({ message: 'Failed to delete property', error: error.message });
     }
 };
