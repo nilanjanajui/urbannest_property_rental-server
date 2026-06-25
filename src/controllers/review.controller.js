@@ -40,3 +40,14 @@ export const createReview = async (req, res) => {
         res.status(500).json({ message: 'Failed to submit review', error: error.message });
     }
 };
+
+export const getHomeReviews = async (req, res) => {
+    try {
+        const reviews = await Review.find({})
+            .sort({ createdAt: -1 })
+            .limit(4);
+        res.json({ reviews });
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to fetch reviews', error: error.message });
+    }
+};
