@@ -19,6 +19,8 @@ import bookingRouter from "./routes/booking.route.js";
 import paymentRouter from "./routes/payment.route.js";
 import favoriteRouter from './routes/favorite.route.js';
 import analyticsRouter from './routes/analytics.route.js';
+import userRouter from './routes/user.route.js';
+import transactionRouter from './routes/transaction.route.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -45,6 +47,9 @@ app.use("/api/bookings", bookingRouter);
 app.use("/api/payments", paymentRouter);
 app.use("/api/favorites", favoriteRouter);
 app.use('/api/analytics', analyticsRouter);
+app.use('/api/users', userRouter);
+app.use('/api/transactions', transactionRouter);
+
 app.use((req, res) => {
     res.status(404).json({ message: "Route not found" });
 });

@@ -94,7 +94,7 @@ export const updateProperty = async (req, res) => {
         if (!property) {
             return res.status(404).json({ message: 'Property not found' });
         }
-        if (property.ownerId.toString() !== req.user.id) {
+        if (property.ownerId.toString() !== req.user.id && req.user.role !== "admin") {
             return res.status(403).json({ message: 'You can only update your own properties' });
         }
         const updated = await Property.findByIdAndUpdate(
@@ -115,7 +115,7 @@ export const deleteProperty = async (req, res) => {
         if (!property) {
             return res.status(404).json({ message: 'Property not found' });
         }
-        if (property.ownerId.toString() !== req.user.id) {
+        if (property.ownerId.toString() !== req.user.id && req.user.role !== "admin") {
             return res.status(403).json({ message: 'You can only delete your own properties' });
         }
         await Property.findByIdAndDelete(req.params.id);
@@ -168,5 +168,27 @@ export const updatePropertyStatus = async (req, res) => {
     } catch (error) {
         console.error('UPDATE PROPERTY STATUS ERROR:', error);
         res.status(500).json({ message: 'Failed to update status', error: error.message });
+    }
+};
+
+export const getAllAdminProperties = async (req, res) => {
+    try {
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const skip = (page - 1) * limit;
+
+        const [properties, total] = await Promise.all([
+            Property.find()
+                .sort({ createdAt: -1 })
+                .skip(skip)
+                .limit(limit)
+                .populate("ownerId", "name email"),
+            Property.countDocuments(),
+        ]);
+
+        res.json({ properties, pagination: { total, page, totalPages: Math.ceil(total / limit) } });
+    } catch (error) {
+        console.error("GET ADMIN PROPERTIES ERROR:", error);
+        res.status(500).json({ message: "Failed to fetch properties", error: error.message });
     }
 };
