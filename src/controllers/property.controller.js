@@ -125,3 +125,48 @@ export const deleteProperty = async (req, res) => {
         res.status(500).json({ message: 'Failed to delete property', error: error.message });
     }
 };
+
+export const getOwnerProperties = async (req, res) => {
+    try {
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 8;
+        const skip = (page - 1) * limit;
+
+        const filter = { ownerId: req.user.id };
+        const [properties, total] = await Promise.all([
+            Property.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit),
+            Property.countDocuments(filter),
+        ]);
+
+        res.json({
+            properties,
+            pagination: { total, page, totalPages: Math.ceil(total / limit) },
+        });
+    } catch (error) {
+        console.error('GET OWNER PROPERTIES ERROR:', error);
+        res.status(500).json({ message: 'Failed to fetch properties', error: error.message });
+    }
+};
+
+export const updatePropertyStatus = async (req, res) => {
+    try {
+        const { status, rejectionFeedback } = req.body;
+
+        if (!['approved', 'rejected'].includes(status)) {
+            return res.status(400).json({ message: 'Invalid status' });
+        }
+
+        const update = { status };
+        if (status === 'rejected' && rejectionFeedback) {
+            update.rejectionFeedback = rejectionFeedback;
+        }
+
+        const property = await Property.findByIdAndUpdate(req.params.id, update, { new: true });
+        if (!property) return res.status(404).json({ message: 'Property not found' });
+
+        res.json({ message: `Property ${status} successfully`, property });
+    } catch (error) {
+        console.error('UPDATE PROPERTY STATUS ERROR:', error);
+        res.status(500).json({ message: 'Failed to update status', error: error.message });
+    }
+};

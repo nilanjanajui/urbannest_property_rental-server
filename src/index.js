@@ -18,6 +18,7 @@ import reviewRouter from './routes/review.route.js';
 import bookingRouter from "./routes/booking.route.js";
 import paymentRouter from "./routes/payment.route.js";
 import favoriteRouter from './routes/favorite.route.js';
+import analyticsRouter from './routes/analytics.route.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -43,6 +44,7 @@ app.use('/api/reviews', reviewRouter);
 app.use("/api/bookings", bookingRouter);
 app.use("/api/payments", paymentRouter);
 app.use("/api/favorites", favoriteRouter);
+app.use('/api/analytics', analyticsRouter);
 app.use((req, res) => {
     res.status(404).json({ message: "Route not found" });
 });
