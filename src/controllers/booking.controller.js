@@ -33,11 +33,21 @@ export const createBooking = async (req, res, next) => {
 
 export const getTenantBookings = async (req, res, next) => {
     try {
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 5;
+        const skip = (page - 1) * limit;
+
+        const total = await Booking.countDocuments({ tenantId: req.user.id });
         const bookings = await Booking.find({ tenantId: req.user.id })
             .populate("propertyId", "title location images rent rentType")
-            .sort({ createdAt: -1 });
+            .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(limit);
 
-        res.status(200).json({ bookings });
+        res.status(200).json({
+            bookings,
+            pagination: { total, page, totalPages: Math.ceil(total / limit) }
+        });
     } catch (error) {
         next(error);
     }
