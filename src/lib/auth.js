@@ -5,7 +5,18 @@ import { MongoClient } from "mongodb";
 const client = new MongoClient(process.env.MONGODB_URI);
 
 export const auth = betterAuth({
+    baseURL: process.env.BETTER_AUTH_URL, // e.g. https://urbannest-property-rental-server.onrender.com — no trailing slash
+
     database: mongodbAdapter(client.db("urbarnest-admin")),
+
+    advanced: {
+        useSecureCookies: true,
+        defaultCookieAttributes: {
+            sameSite: "none",
+            secure: true,
+            partitioned: true,
+        },
+    },
 
     emailAndPassword: {
         enabled: true,
