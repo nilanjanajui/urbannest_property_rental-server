@@ -1,4 +1,4 @@
-# UrbanNest — REST API Server
+# UrbanNest - REST API Server
 
 > A secure and scalable Express.js backend powering the UrbanNest property rental platform. It handles authentication, property management, bookings, payments, and analytics.
 
