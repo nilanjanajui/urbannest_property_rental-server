@@ -53,6 +53,7 @@ app.get("/api/token", async (req, res) => {
                 id: session.user.id,
                 email: session.user.email,
                 role: session.user.role,
+                name: session.user.name,
             },
             process.env.JWT_SECRET,
             { expiresIn: "1h" }
