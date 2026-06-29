@@ -1,7 +1,6 @@
 import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import { MongoClient } from "mongodb";
-import { jwt } from "better-auth/plugins";
 
 const client = new MongoClient(process.env.MONGODB_URI);
 
@@ -9,14 +8,9 @@ export const auth = betterAuth({
     baseURL: process.env.BETTER_AUTH_URL,
     database: mongodbAdapter(client.db("urbarnest-admin")),
 
-    plugins: [jwt()],
-
     advanced: {
         useSecureCookies: true,
-        defaultCookieAttributes: {
-            sameSite: "none",
-            secure: true,
-        },
+        defaultCookieAttributes: { sameSite: "none", secure: true },
     },
 
     emailAndPassword: { enabled: true },

@@ -2,6 +2,7 @@ import "dotenv/config";
 import { toNodeHandler } from "better-auth/node";
 import { auth } from "./lib/auth.js";
 import express from "express";
+import jwt from "jsonwebtoken";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
@@ -40,6 +41,27 @@ app.all("/api/auth/*splat", toNodeHandler(auth));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.get("/api/token", async (req, res) => {
+    try {
+        const session = await auth.api.getSession({ headers: req.headers });
+        if (!session?.user) {
+            return res.status(401).json({ message: "Unauthorized" });
+        }
+        const token = jwt.sign(
+            {
+                id: session.user.id,
+                email: session.user.email,
+                role: session.user.role,
+            },
+            process.env.JWT_SECRET,
+            { expiresIn: "1h" }
+        );
+        return res.json({ token });
+    } catch {
+        return res.status(500).json({ message: "Token generation failed" });
+    }
+});
 
 app.use("/api/health", healthRoute);
 app.use('/api/properties', propertyRouter);
