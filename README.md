@@ -240,8 +240,4 @@ Server runs at **http://localhost:5000**
 
 This project was developed for educational and portfolio purposes under the **MIT License**.
 
-<div align="center">
 
-**Built with Node.js, Express.js, MongoDB, Better Auth, JWT & Stripe**
-
-</div>
