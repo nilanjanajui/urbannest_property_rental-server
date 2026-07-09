@@ -1,123 +1,103 @@
-# UrbanNest - REST API Server
+<div align="center">
 
-> A secure, scalable, and production-ready REST API built with **Express.js**, **MongoDB**, **Better Auth**, and **Stripe**. It powers the UrbanNest property rental platform by providing authentication, property management, booking workflows, payment processing, and analytics services.
+# ⚙️ UrbanNest API
+### Secure, Scalable REST API for the UrbanNest Rental Marketplace
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Express.js-5-black?style=for-the-badge&logo=express" />
-  <img src="https://img.shields.io/badge/MongoDB-Database-47A248?style=for-the-badge&logo=mongodb&logoColor=white" />
-  <img src="https://img.shields.io/badge/Better%20Auth-Authentication-blue?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/JWT-Authorization-black?style=for-the-badge&logo=jsonwebtokens" />
-  <img src="https://img.shields.io/badge/Stripe-Payments-635BFF?style=for-the-badge&logo=stripe&logoColor=white" />
-  <img src="https://img.shields.io/badge/License-MIT-success?style=for-the-badge" />
-</p>
+**Production-grade backend powering authentication, property management, booking workflows,
+Stripe payments, and owner analytics — built on Express.js and MongoDB.**
 
----
+[![Live API](https://img.shields.io/badge/🚀_Live_API-Render-46E3B7?style=for-the-badge)](https://urbannest-property-rental-server.onrender.com)
+[![Health Check](https://img.shields.io/badge/💚_Health_Check-Status-22C55E?style=for-the-badge)](https://urbannest-property-rental-server.onrender.com/api/health)
+[![Client Repo](https://img.shields.io/badge/🖥️_Client_Repo-GitHub-181717?style=for-the-badge&logo=github)](https://github.com/nilanjanajui/urbannest_property_rental-client)
 
-## Live Services
+<br/>
 
-| Service            | URL                                                              |
-| ------------------ | ---------------------------------------------------------------- |
-| API Server         | https://urbannest-property-rental-server.onrender.com            |
-| Health Check       | https://urbannest-property-rental-server.onrender.com/api/health |
-| Client Application | https://urbannest-property-rental-client.vercel.app              |
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)
+![Express](https://img.shields.io/badge/Express.js_5-000000?style=for-the-badge&logo=express&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
+![Better Auth](https://img.shields.io/badge/Better_Auth-000000?style=for-the-badge&logo=auth0&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-Secured-black?style=for-the-badge&logo=jsonwebtokens)
+![Stripe](https://img.shields.io/badge/Stripe-635BFF?style=for-the-badge&logo=stripe&logoColor=white)
+![Render](https://img.shields.io/badge/Deployed_on_Render-46E3B7?style=for-the-badge&logo=render&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-success?style=for-the-badge)
 
----
-
-## Overview
-
-UrbanNest REST API serves as the backend of the UrbanNest rental marketplace. It provides secure authentication, role-based authorization, property management, booking operations, payment processing through Stripe, and analytical data for property owners.
-
-The application follows a modular architecture with Express.js and MongoDB, making it scalable, maintainable, and easy to extend.
+</div>
 
 ---
 
-# Technology Stack
+## 💡 Why This API?
 
-<p align="center">
-<img src="https://skillicons.dev/icons?i=nodejs,express,mongodb,git,github,vscode&theme=dark"/>
-</p>
+This isn't a single-resource CRUD demo — it's the backend for a **three-role marketplace** (Tenant, Owner, Admin), handling real payment flows, aggregation-based analytics, and role-scoped authorization across dozens of endpoints. It's built the way a production rental platform's API actually needs to work.
 
-| Category       | Technologies      |
-| -------------- | ----------------- |
-| Runtime        | Node.js           |
-| Framework      | Express.js 5      |
-| Database       | MongoDB, Mongoose |
-| Authentication | Better Auth, JWT  |
-| Payments       | Stripe            |
-| Security       | Helmet, CORS      |
-| Logging        | Morgan            |
-| Environment    | Dotenv            |
+**At a glance:**
+
+| | |
+|---|---|
+| 🔐 **Auth** | Better Auth + JWT, Google OAuth, signed cross-domain cookies |
+| 🏘️ **Properties** | Full CRUD, approval workflow, server-side search/filter/pagination |
+| 📅 **Bookings** | Role-scoped request → approval → status tracking |
+| 💳 **Payments** | Stripe Payment Intents with server-side verification |
+| 📊 **Analytics** | MongoDB aggregation pipelines for revenue & booking insights |
+| 🛡️ **Security** | Helmet, CORS, role-based access control on every protected route |
 
 ---
 
-# Core Features
+## 🖥️ Tech Stack
 
-## Authentication & Authorization
+<div align="center">
+<img src="https://skillicons.dev/icons?i=nodejs,express,mongodb,git,github,vscode&theme=dark" />
+</div>
 
-* Email and password authentication
-* Google OAuth integration
-* JWT-based API authentication
-* Role-based access control
-* Secure session management with Better Auth
-* Signed cookies for cross-domain authentication
-* Protected endpoints for Tenant, Owner, and Admin roles
-
----
-
-## Property Management
-
-* Complete CRUD operations
-* Property approval workflow
-* Server-side searching
-* Filtering by location, property type, and price
-* Pagination and sorting
-* Featured property endpoint
-* Owner-specific property management
+| Layer | Technology |
+|---|---|
+| **Runtime** | Node.js |
+| **Framework** | Express.js 5 |
+| **Database** | MongoDB + Mongoose ODM |
+| **Auth** | Better Auth, JWT, Google OAuth |
+| **Payments** | Stripe (Payment Intents API) |
+| **Security** | Helmet, CORS |
+| **Logging** | Morgan |
+| **Config** | Dotenv |
 
 ---
 
-## Booking Management
+## ✨ Core Features
 
-* Booking request creation
-* Booking approval and rejection workflow
-* Booking status management
-* Payment status tracking
-* Separate booking endpoints for each user role
+### 🔐 Authentication & Authorization
+- Email/password + Google OAuth via Better Auth
+- JWT-secured endpoints with signed, cross-domain cookies
+- Role-based access control across Tenant, Owner, and Admin routes
 
----
+### 🏘️ Property Management
+- Full CRUD with an owner-submitted → admin-approved workflow
+- Server-side search, filtering (location, type, price), pagination & sorting
+- Dedicated featured-listings endpoint
 
-## Payment Processing
+### 📅 Booking Management
+- Request → approve/reject → status-tracked lifecycle
+- Payment status synced to booking records
+- Role-specific booking endpoints (tenant / owner / admin)
 
-* Stripe Payment Intent integration
-* Server-side payment verification
-* Secure transaction recording
-* Transaction history management
-* Payment validation before database updates
+### 💳 Payment Processing
+- Stripe Payment Intent creation and confirmation
+- Server-side verification before any DB write — no client-trusted payment states
+- Full transaction history logging
 
----
+### 📊 Analytics
+- MongoDB aggregation pipelines for monthly earnings & booking trends
+- Owner-facing revenue dashboards
+- Platform-wide transaction reporting for admins
 
-## Analytics
-
-* MongoDB aggregation pipelines
-* Monthly earnings reports
-* Owner dashboard statistics
-* Revenue insights
-* Booking analytics
-
----
-
-## Reviews & Favorites
-
-* Review management
-* Latest review endpoint
-* Favorite property management
-* Duplicate favorite prevention using compound indexes
+### ⭐ Reviews & Favorites
+- Review CRUD with a "latest reviews" public endpoint
+- Favorites system with **compound indexes** to prevent duplicates at the database level
 
 ---
 
-# API Overview
+## 📡 API Reference
 
-## Public Endpoints
+<details>
+<summary><strong>🌍 Public Endpoints</strong></summary>
 
 ```http
 GET    /api/health
@@ -125,10 +105,10 @@ GET    /api/properties
 GET    /api/properties/featured
 GET    /api/reviews/home
 ```
+</details>
 
----
-
-## Protected Endpoints
+<details>
+<summary><strong>🔒 Protected Endpoints</strong></summary>
 
 ```http
 GET    /api/token
@@ -137,10 +117,10 @@ POST   /api/bookings
 POST   /api/reviews
 GET    /api/favorites/check
 ```
+</details>
 
----
-
-## Tenant Routes
+<details>
+<summary><strong>🏠 Tenant Routes</strong></summary>
 
 ```http
 GET     /api/bookings/tenant
@@ -150,10 +130,10 @@ DELETE  /api/favorites/:id
 POST    /api/payments/create-intent
 POST    /api/payments/confirm
 ```
+</details>
 
----
-
-## Owner Routes
+<details>
+<summary><strong>🏘️ Owner Routes</strong></summary>
 
 ```http
 GET     /api/properties/owner/mine
@@ -164,10 +144,10 @@ GET     /api/bookings/owner
 PATCH   /api/bookings/:id/status
 GET     /api/analytics/owner
 ```
+</details>
 
----
-
-## Admin Routes
+<details>
+<summary><strong>🛡️ Admin Routes</strong></summary>
 
 ```http
 GET     /api/properties/admin/all
@@ -177,111 +157,91 @@ GET     /api/users
 PATCH   /api/users/:id/role
 GET     /api/transactions
 ```
+</details>
 
 ---
 
-# Project Structure
+## 🗂️ Project Structure
 
 ```text
 src/
 ├── controllers/        # Business logic
-├── middlewares/        # Authentication & authorization
-├── models/             # Mongoose schemas
-├── routes/             # API route definitions
+├── middlewares/         # Authentication & authorization
+├── models/               # Mongoose schemas
+├── routes/               # API route definitions
 ├── lib/
-│   └── auth.js         # Better Auth configuration
+│   └── auth.js           # Better Auth configuration
 ├── utils/
-│   └── db.js           # Database connection
-└── index.js            # Application entry point
+│   └── db.js              # Database connection
+└── index.js               # Application entry point
 ```
 
 ---
 
-# Getting Started
-
-## Clone the repository
+## 🚀 Getting Started
 
 ```bash
+# Clone the repository
 git clone https://github.com/nilanjanajui/urbannest_property_rental-server.git
-
 cd urbannest_property_rental-server
-```
 
-## Install dependencies
-
-```bash
+# Install dependencies
 npm install
 ```
 
-## Configure environment variables
-
-Create a `.env` file in the project root.
+Create a `.env` file in the project root:
 
 ```env
 MONGODB_URI=mongodb+srv://user:password@cluster.mongodb.net/urbannest
-
 PORT=5000
-
 CLIENT_URL=https://your-client.vercel.app
 
 BETTER_AUTH_SECRET=your_32_character_secret
-
 BETTER_AUTH_URL=https://your-server.onrender.com
-
 GOOGLE_CLIENT_ID=your_google_client_id
-
 GOOGLE_CLIENT_SECRET=your_google_client_secret
 
 STRIPE_SECRET_KEY=sk_test_your_key
-
 JWT_SECRET=your_secure_jwt_secret
 ```
 
-## Start the development server
-
 ```bash
+# Start the server
 node src/index.js
 ```
 
-The server will be available at:
-
-```text
-http://localhost:5000
-```
+Server runs at **http://localhost:5000**
 
 ---
 
-# Project Highlights
+## 🏆 Project Highlights
 
-* Express.js 5 REST API architecture
-* MongoDB with Mongoose ODM
-* Better Auth authentication system
-* JWT-secured protected endpoints
-* Role-based authorization
-* Stripe payment processing
-* MongoDB aggregation pipelines
-* Secure middleware with Helmet and CORS
-* Modular controller-based architecture
-* Production deployment on Render
+- ⚡ **Express.js 5** modular, controller-based REST architecture
+- 🔒 **Better Auth + JWT** authentication with role-based access control
+- 💳 **Real Stripe integration** with server-side payment verification (not client-trusted)
+- 📊 **MongoDB aggregation pipelines** for real analytics, not hardcoded numbers
+- 🛡️ **Hardened with Helmet & CORS**, signed cross-domain cookies
+- 🧩 **Compound indexes** to enforce data integrity (e.g., no duplicate favorites)
+- ☁️ **Live production deployment** on Render
 
 ---
 
-# Related Projects
+## 🔗 Related Repositories
 
-| Repository | Link                                                             |
-| ---------- | ---------------------------------------------------------------- |
-| Client     | https://github.com/nilanjanajui/urbannest_property_rental-client |
-| Server     | https://github.com/nilanjanajui/urbannest_property_rental-server |
-| Live API   | https://urbannest-property-rental-server.onrender.com            |
-
----
-
-# License
-
-This project was developed for educational and portfolio purposes.
+| Repository | Link |
+|---|---|
+| ⚙️ Server (this repo) | You're here |
+| 🖥️ Client | [urbannest_property_rental-client](https://github.com/nilanjanajui/urbannest_property_rental-client) |
+| 🌐 Live API | [urbannest-property-rental-server.onrender.com](https://urbannest-property-rental-server.onrender.com) |
 
 ---
 
-<p align="center">
-Built with Node.js, Express.js, MongoDB, Better Auth, JWT, and Stripe.
-</p>
+## 📄 License
+
+This project was developed for educational and portfolio purposes under the **MIT License**.
+
+<div align="center">
+
+**Built with Node.js, Express.js, MongoDB, Better Auth, JWT & Stripe**
+
+</div>
